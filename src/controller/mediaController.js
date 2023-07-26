@@ -4,20 +4,7 @@ const SECRET = process.env.SECRET
 
 const getAllMedia = async (req, res) =>{
     try {
-        const authHeader = req.get("authorization")
-
-        if(!authHeader){
-            return res.status(404).send(`Enter authorization information`)
-        }
-
-        const token = authHeader.split(" ")[1]
-
-        jwt.verify(token, SECRET, async function(error){
-            if(error){
-                return res.status(403).send(`Unauthorized access`)
-            }
-        })
-
+       
         const allMedia = await midiasModel.find()
         res.status(200).json(allMedia)
     } catch (error) {
@@ -29,19 +16,7 @@ const getAllMedia = async (req, res) =>{
 
 const getById = async (req, res) =>{
     try {
-        const authHeader = req.get("authorization")
-
-        if(!authHeader){
-            return res.status(404).send(`Enter authorization information`)
-        }
-
-        const token = authHeader.split(" ")[1]
-
-        jwt.verify(token, SECRET, async function(error){
-            if(error){
-                return res.status(403).send(`Unauthorized access`)
-            }
-        })
+       
         const findMedia = await midiasModel.findById(req.params.id)
         if(findMedia == null){
         res.status(404).send({message: "Media not available"})
